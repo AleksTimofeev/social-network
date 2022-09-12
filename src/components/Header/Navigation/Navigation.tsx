@@ -1,5 +1,4 @@
 import React from 'react';
-import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import {IconButton} from "@mui/material";
@@ -55,8 +54,6 @@ const Navigation = () => {
             Profile
           </NavLink>
         </MenuItem>
-        <MenuItem onClick={handleClose}>My account</MenuItem>
-        <MenuItem onClick={handleClose}>Logout</MenuItem>
       </Menu>
     </div>
   );
