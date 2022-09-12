@@ -1,7 +1,6 @@
 import {combineReducers} from "redux";
+import {authReducer} from "./authReducer";
 
 export const rootReducer = combineReducers({
-  testReducer: () => {
-    return {value: 'ddd'}
-  }
+  auth: authReducer
 })
