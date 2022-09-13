@@ -3,14 +3,17 @@ import styles from './header.module.css'
 import {AppBar, Button, Toolbar, Typography} from "@mui/material";
 import Navigation from "./Navigation/Navigation";
 import {useSelector} from "react-redux";
-import {AppStateType} from "../../store";
+import {AppStateType, useAppDispatch} from "../../store";
+import {logoutTC} from "../../store/authReducer";
 
 const Header = () => {
+
+  const dispatch = useAppDispatch()
 
   const login = useSelector((state: AppStateType) => state.auth.login)
   const isLogged = useSelector((state: AppStateType) => state.auth.isLogged)
 
-  const handleLogout = () => {}
+  const handleLogout = () => {dispatch(logoutTC())}
   const handleLogin = () => {}
 
   return (

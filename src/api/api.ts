@@ -27,5 +27,8 @@ export const api = {
       .then(res => res.data)
   },
   login(){},
-  logout(){},
+  logout(){
+    return instance.delete<{resultCode: number}>('auth/login')
+      .then(res => res.data)
+  },
 }

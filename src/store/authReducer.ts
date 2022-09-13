@@ -2,13 +2,15 @@ import {Dispatch} from "redux";
 import {api, AuthMeDataType} from "../api/api";
 import {changeStatusInitializingApp} from "./appReducer";
 
-enum Actions {
-  AUTH_ME = 'AUTH_ME'
+enum ActionsAuth {
+  AUTH_ME = 'AUTH_ME',
+  LOGOUT = 'LOGOUT'
 }
 
 export type AuthReducerStateType = AuthMeDataType & { isLogged: boolean }
 
-type ActionsType = ReturnType<typeof authMeAC>
+type ActionsType = ReturnType<typeof authMeAC> |
+  ReturnType<typeof logoutAC>
 
 const initialState: AuthReducerStateType = {
   id: null,
@@ -19,15 +21,22 @@ const initialState: AuthReducerStateType = {
 
 export const authReducer = (state = initialState, action: ActionsType) => {
   switch (action.type) {
-    case Actions.AUTH_ME:
+    case ActionsAuth.AUTH_ME:
       return {...state, ...action.data, isLogged: true}
+    case ActionsAuth.LOGOUT: return {...state,
+      id: null,
+      login: null,
+      email: null,
+      isLogged: false
+    }
 
     default:
       return state
   }
 }
 
-const authMeAC = (data: AuthMeDataType) => ({type: Actions.AUTH_ME, data} as const)
+const authMeAC = (data: AuthMeDataType) => ({type: ActionsAuth.AUTH_ME, data}as const)
+const logoutAC = () => ({type: ActionsAuth.LOGOUT}as const)
 
 export const authMeTC = () => async (dispatch: Dispatch) => {
   try {
@@ -35,9 +44,22 @@ export const authMeTC = () => async (dispatch: Dispatch) => {
     const authData = await api.authMe()
     if (authData.resultCode === 0) {
       dispatch(authMeAC(authData.data))
-      dispatch(changeStatusInitializingApp('succeeded'))
+      // dispatch(changeStatusInitializingApp('succeeded'))
     }
   } catch (error) {
+    alert(error)
+  } finally {
+    dispatch(changeStatusInitializingApp('succeeded'))
+  }
+}
+export const logoutTC = () => async (dispatch: Dispatch) => {
+  debugger
+  try {
+    const res = await api.logout()
+    if(res.resultCode === 0){
+      dispatch(logoutAC())
+    }
+  }catch (error){
     alert(error)
   }
 }
