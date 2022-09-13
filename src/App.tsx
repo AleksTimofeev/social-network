@@ -8,6 +8,7 @@ import {AppStateType, useAppDispatch} from "./store";
 import {authMeTC} from "./store/authReducer";
 import {RequestStatusType} from "./store/appReducer";
 import styles from './app.module.css'
+import Login from "./components/Login/Login";
 
 function App() {
 
@@ -37,6 +38,7 @@ function App() {
                 <h2>Home</h2>
               }/>
               <Route path={'profile'} element={<Profile/>}/>
+              <Route path={'login'} element={<Login />} />
             </Routes>
           </Container>
         </Grid>
