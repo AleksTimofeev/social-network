@@ -4,13 +4,15 @@ import {changeStatusInitializingApp} from "./appReducer";
 
 enum ActionsAuth {
   AUTH_ME = 'AUTH_ME',
-  LOGOUT = 'LOGOUT'
+  LOGOUT = 'LOGOUT',
+  LOGIN = 'LOGIN'
 }
 
 export type AuthReducerStateType = AuthMeDataType & { isLogged: boolean }
 
 type ActionsType = ReturnType<typeof authMeAC> |
-  ReturnType<typeof logoutAC>
+  ReturnType<typeof logoutAC>|
+  ReturnType<typeof loginAC>
 
 const initialState: AuthReducerStateType = {
   id: null,
@@ -29,6 +31,7 @@ export const authReducer = (state = initialState, action: ActionsType) => {
       email: null,
       isLogged: false
     }
+    case ActionsAuth.LOGIN: return {...state, id: action.idUser, isLogged: true}
 
     default:
       return state
@@ -37,6 +40,7 @@ export const authReducer = (state = initialState, action: ActionsType) => {
 
 const authMeAC = (data: AuthMeDataType) => ({type: ActionsAuth.AUTH_ME, data}as const)
 const logoutAC = () => ({type: ActionsAuth.LOGOUT}as const)
+const loginAC = (idUser: number) => ({type: ActionsAuth.LOGIN, idUser}as const)
 
 export const authMeTC = () => async (dispatch: Dispatch) => {
   try {
@@ -61,5 +65,17 @@ export const logoutTC = () => async (dispatch: Dispatch) => {
     }
   }catch (error){
     alert(error)
+  }
+}
+export const loginTC = (email: string, password: string, rememberMe: boolean) => async (dispatch: Dispatch) => {
+  try {
+    const res = await api.login(email, password, rememberMe)
+    if(res.resultCode === 0){
+      dispatch(loginAC(res.data.id))
+    }
+  }catch (e) {
+    alert(e)
+  }finally {
+
   }
 }

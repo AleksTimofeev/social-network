@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {Route, Routes} from "react-router-dom";
+import {Route, Routes, useNavigate} from "react-router-dom";
 import {CircularProgress, Container, Grid} from "@mui/material";
 import Header from "./components/Header/Header";
 import Profile from "./components/Main/Pages/Profile/Profile";
@@ -9,16 +9,21 @@ import {authMeTC} from "./store/authReducer";
 import {RequestStatusType} from "./store/appReducer";
 import styles from './app.module.css'
 import Login from "./components/Login/Login";
+import navigation from "./components/Header/Navigation/Navigation";
 
 function App() {
 
   const dispatch = useAppDispatch()
+  const navigate = useNavigate()
   const isLogged = useSelector((state: AppStateType): boolean => state.auth.isLogged)
   const statusInitializingApp = useSelector((state: AppStateType):RequestStatusType => state.app.statusInitializingApp)
 
   useEffect(() => {
     dispatch(authMeTC())
-  },[])
+    if(!isLogged){
+      navigate('login')
+    }
+  },[isLogged])
 
   return (
     <div className="App">

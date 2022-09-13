@@ -26,7 +26,10 @@ export const api = {
     return instance.get<BaseResponseType<AuthMeDataType>>('auth/me')
       .then(res => res.data)
   },
-  login(){},
+  login(email: string, password: string, rememberMe: boolean){
+    return instance.post<BaseResponseType<{id: number}>>('auth/login', {email, password, rememberMe})
+      .then(res => res.data)
+  },
   logout(){
     return instance.delete<{resultCode: number}>('auth/login')
       .then(res => res.data)

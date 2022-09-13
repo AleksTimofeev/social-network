@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import styles from './header.module.css'
 import {AppBar, Button, Toolbar, Typography} from "@mui/material";
 import Navigation from "./Navigation/Navigation";
