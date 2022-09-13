@@ -1,23 +1,34 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import styles from './header.module.css'
-import {AppBar, Button, IconButton, Toolbar, Typography} from "@mui/material";
+import {AppBar, Button, Toolbar, Typography} from "@mui/material";
 import Navigation from "./Navigation/Navigation";
-import {useLocation, useParams} from "react-router-dom";
+import {useSelector} from "react-redux";
+import {AppStateType} from "../../store";
 
 const Header = () => {
 
-  const p = useLocation()
-  const title = p.pathname.split('').filter(e => e !== '/').join('')
+  const login = useSelector((state: AppStateType) => state.auth.login)
+  const isLogged = useSelector((state: AppStateType) => state.auth.isLogged)
+
+  const handleLogout = () => {}
+  const handleLogin = () => {}
 
   return (
     <div className={styles.headerWrapper}>
       <AppBar position="static">
         <Toolbar>
-          <Navigation />
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            {title.length ? title : 'home'}
+          <Navigation/>
+          <Typography variant="h6" component="div" sx={{flexGrow: 1}}>
+            {login}
           </Typography>
-          <Button color="inherit">Login</Button>
+          {isLogged ?
+            <Button color="inherit"
+                    onClick={handleLogout}
+            >Logout</Button> :
+            <Button color="inherit"
+                    onClick={handleLogin}
+            >Login</Button>
+          }
         </Toolbar>
       </AppBar>
     </div>

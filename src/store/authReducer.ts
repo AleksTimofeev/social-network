@@ -1,5 +1,6 @@
 import {Dispatch} from "redux";
 import {api, AuthMeDataType} from "../api/api";
+import {changeStatusInitializingApp} from "./appReducer";
 
 enum Actions {
   AUTH_ME = 'AUTH_ME'
@@ -30,9 +31,11 @@ const authMeAC = (data: AuthMeDataType) => ({type: Actions.AUTH_ME, data} as con
 
 export const authMeTC = () => async (dispatch: Dispatch) => {
   try {
+    dispatch(changeStatusInitializingApp('loading'))
     const authData = await api.authMe()
     if (authData.resultCode === 0) {
       dispatch(authMeAC(authData.data))
+      dispatch(changeStatusInitializingApp('succeeded'))
     }
   } catch (error) {
     alert(error)

@@ -26,4 +26,6 @@ export const api = {
     return instance.get<BaseResponseType<AuthMeDataType>>('auth/me')
       .then(res => res.data)
   },
+  login(){},
+  logout(){},
 }
