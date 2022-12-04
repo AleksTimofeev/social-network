@@ -1,0 +1,86 @@
+import {Dispatch} from "redux";
+import {api, AuthMeDataType} from "../../api/api";
+import {changeStatusInitializingApp} from "../../app/appReducer";
+import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
+
+export type AuthReducerStateType = {
+  userData: AuthMeDataType
+  errorResponse: any
+}
+
+const initialState: AuthReducerStateType = {
+  userData: {
+    id: null,
+    login: null,
+    email: null
+  },
+  errorResponse: null
+}
+
+export const authMe = createAsyncThunk('auth/authMe',async (arg, thunkAPI) => {
+  thunkAPI.dispatch(changeStatusInitializingApp('loading'))
+  try {
+    const authData = await api.authMe()
+    if (authData.resultCode === 0) {
+      return authData.data
+    } else {
+      thunkAPI.rejectWithValue({message: authData.messages})
+    }
+  } catch (error) {
+    thunkAPI.rejectWithValue({message: 'error'})
+    alert(error)
+  } finally {
+    thunkAPI.dispatch(changeStatusInitializingApp('succeeded'))
+  }
+})
+
+export const logout = createAsyncThunk('auth/logout', async (arg, thunkAPI) => {
+  try {
+    const res = await api.logout()
+    if (res.resultCode === 0) {
+      return
+    }
+  } catch (error) {
+    alert(error)
+  }
+})
+
+export const login = createAsyncThunk('auth/login', async (
+  arg: {email: string, password: string, rememberMe: boolean},
+  thunkAPI) => {
+  try {
+    const res = await api.login(arg.email, arg.password, arg.rememberMe)
+    if (res.resultCode === 0) {
+      thunkAPI.dispatch(authMe())
+    }
+  } catch (e) {
+    alert(e)
+  } finally {
+
+  }
+})
+
+
+const slice = createSlice({
+  name: 'auth',
+  initialState: initialState,
+  reducers: {},
+  extraReducers: (builder) => {
+    builder.addCase(authMe.fulfilled, (state, action) => {
+      if(action.payload){
+        state.userData = action.payload
+      }
+    })
+    builder.addCase(authMe.rejected, (state, action) => {
+      state.errorResponse = action.payload
+    })
+    builder.addCase(logout.fulfilled, (state) => {
+      state.userData.id = null
+      state.userData.login = null
+      state.userData.email = null
+    })
+  }
+})
+
+export const authReducer = slice.reducer
+

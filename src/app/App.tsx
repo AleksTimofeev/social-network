@@ -1,25 +1,22 @@
 import React, {useEffect} from 'react';
 import {Route, Routes, useNavigate} from "react-router-dom";
 import {CircularProgress, Container, Grid} from "@mui/material";
-import Header from "./components/Header/Header";
-import Profile from "./components/Main/Pages/Profile/Profile";
-import {useSelector} from "react-redux";
-import {AppStateType, useAppDispatch} from "./store";
-import {authMeTC} from "./store/authReducer";
-import {RequestStatusType} from "./store/appReducer";
+import Header from "../components/Header/Header";
+import Profile from "../components/Main/Pages/Profile/Profile";
 import styles from './app.module.css'
-import Login from "./components/Login/Login";
-import navigation from "./components/Header/Navigation/Navigation";
+import Login from "../features/auth/Login/Login";
+import {useAppDispatch, useAppSelector} from "./store";
+import {authMe} from "../features/auth/authReducer";
 
 function App() {
 
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
-  const isLogged = useSelector((state: AppStateType): boolean => state.auth.isLogged)
-  const statusInitializingApp = useSelector((state: AppStateType):RequestStatusType => state.app.statusInitializingApp)
+  const isLogged = useAppSelector(state => state.auth.userData.id)
+  const statusInitializingApp = useAppSelector(state => state.app.statusInitializingApp)
 
   useEffect(() => {
-    dispatch(authMeTC())
+    dispatch(authMe())
     if(!isLogged){
       navigate('login')
     }

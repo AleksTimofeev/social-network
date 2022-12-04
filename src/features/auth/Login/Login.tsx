@@ -1,15 +1,14 @@
 import React, {useEffect} from 'react';
 import {useFormik} from "formik";
-import {AppStateType, useAppDispatch} from "../../store";
-import {loginTC} from "../../store/authReducer";
 import {useNavigate} from "react-router-dom";
-import {useSelector} from "react-redux";
+import {useAppDispatch, useAppSelector} from "../../../app/store";
+import {login} from "../authReducer";
 
 const Login = () => {
 
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
-  const isLogged = useSelector((state: AppStateType) => state.auth.isLogged)
+  const isLogged = useAppSelector(state => state.auth.userData.id)
 
   const formik = useFormik({
     initialValues: {
@@ -17,7 +16,7 @@ const Login = () => {
       password: ''
     },
     onSubmit: values => {
-      dispatch(loginTC(values.email, values.password, false))
+      dispatch(login({email: values.email, password: values.password, rememberMe: false}))
     },
   });
 
