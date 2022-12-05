@@ -1,7 +1,7 @@
 import React from 'react';
-import styles from './header.module.css'
+import styles from './Header.module.css'
 import {AppBar, Button, Toolbar, Typography} from "@mui/material";
-import Navigation from "./Navigation/Navigation";
+import Navigation from "../navigation/Navigation";
 import {useNavigate} from "react-router-dom";
 import {useAppDispatch, useAppSelector} from "../../app/store";
 import {logout} from "../../features/auth/authReducer";
@@ -11,7 +11,7 @@ const Header = () => {
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
 
-  const login = useAppSelector(state => state.auth.userData.login)
+  const login = useAppSelector(state => state.auth.authMeData.login)
 
   const handleLogout = () => {dispatch(logout())}
   const handleLogin = () => {

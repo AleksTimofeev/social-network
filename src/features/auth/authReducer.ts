@@ -4,16 +4,17 @@ import {changeStatusInitializingApp} from "../../app/appReducer";
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
 
 export type AuthReducerStateType = {
-  userData: AuthMeDataType
+  authMeData: AuthMeDataType
   errorResponse: any
 }
 
 const initialState: AuthReducerStateType = {
-  userData: {
+  authMeData: {
     id: null,
     login: null,
     email: null
   },
+
   errorResponse: null
 }
 
@@ -68,16 +69,16 @@ const slice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(authMe.fulfilled, (state, action) => {
       if(action.payload){
-        state.userData = action.payload
+        state.authMeData = action.payload
       }
     })
     builder.addCase(authMe.rejected, (state, action) => {
       state.errorResponse = action.payload
     })
     builder.addCase(logout.fulfilled, (state) => {
-      state.userData.id = null
-      state.userData.login = null
-      state.userData.email = null
+      state.authMeData.id = null
+      state.authMeData.login = null
+      state.authMeData.email = null
     })
   }
 })

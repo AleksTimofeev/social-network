@@ -8,7 +8,7 @@ const Login = () => {
 
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
-  const isLogged = useAppSelector(state => state.auth.userData.id)
+  const isLogged = useAppSelector(state => state.auth.authMeData.id)
 
   const formik = useFormik({
     initialValues: {

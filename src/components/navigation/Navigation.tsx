@@ -4,7 +4,7 @@ import MenuItem from '@mui/material/MenuItem';
 import {IconButton} from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import {NavLink} from "react-router-dom";
-import styles from './navigation.module.css'
+import styles from './Navigation.module.css'
 
 const Navigation = () => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
