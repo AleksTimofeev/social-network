@@ -1,14 +1,13 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {useFormik} from "formik";
-import {useNavigate} from "react-router-dom";
+import {Navigate} from "react-router-dom";
 import {useAppDispatch, useAppSelector} from "../../../app/store";
 import {login} from "../authReducer";
 
-const Login = () => {
+export const Login = () => {
 
   const dispatch = useAppDispatch()
-  const navigate = useNavigate()
-  const isLogged = useAppSelector(state => state.auth.authMeData.id)
+  const isLogged = Boolean(useAppSelector(state => state.auth.authMeData.id))
 
   const formik = useFormik({
     initialValues: {
@@ -20,11 +19,9 @@ const Login = () => {
     },
   });
 
-  useEffect(() => {
-    if(isLogged) {
-      navigate('/')
-    }
-  },[isLogged])
+  if(isLogged){
+    return <Navigate to={'/profile'} />
+  }
 
   return (
     <form onSubmit={formik.handleSubmit}>
@@ -51,5 +48,3 @@ const Login = () => {
     </form>
   );
 };
-
-export default Login;
