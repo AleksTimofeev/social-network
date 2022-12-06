@@ -1,7 +1,8 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {Grid} from "@mui/material";
 
-const Profile = () => {
+export const Profile = () => {
+
   return (
     <Grid container spacing={2}>
       <Grid item xs={8}>
@@ -9,6 +10,4 @@ const Profile = () => {
       </Grid>
     </Grid>
   );
-};
-
-export default Profile;
+}

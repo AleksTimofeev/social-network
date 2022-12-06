@@ -1,4 +1,3 @@
-import {Dispatch} from "redux";
 import {api, AuthMeDataType} from "../../api/api";
 import {changeStatusInitializingApp} from "../../app/appReducer";
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
@@ -35,7 +34,7 @@ export const authMe = createAsyncThunk('auth/authMe',async (arg, thunkAPI) => {
   }
 })
 
-export const logout = createAsyncThunk('auth/logout', async (arg, thunkAPI) => {
+export const logout = createAsyncThunk('auth/logout', async () => {
   try {
     const res = await api.logout()
     if (res.resultCode === 0) {
