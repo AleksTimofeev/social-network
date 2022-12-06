@@ -1,10 +1,11 @@
 import React from 'react';
-import {Route, Routes} from "react-router-dom";
+import {Route, Routes, useLocation, useParams} from "react-router-dom";
 import {Profile} from "../features/profile/Profile";
 import {PrivateRoute} from "./PrivateRoute";
 import {Login} from "../features/auth/login/Login";
 
 export const Pages = () => {
+
   return (
     <div>
       <Routes>

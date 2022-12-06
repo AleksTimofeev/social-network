@@ -9,18 +9,6 @@ const instance = axios.create({
   }
 })
 
-type BaseResponseType<D = {}> = {
-  data: D
-  messages: []
-  fieldsErrors: []
-  resultCode: number
-}
-export type AuthMeDataType = {
-  id: number | null
-  login: string | null
-  email: string | null
-}
-
 export const api = {
   authMe(){
     return instance.get<BaseResponseType<AuthMeDataType>>('auth/me')
@@ -34,4 +22,42 @@ export const api = {
     return instance.delete<{resultCode: number}>('auth/login')
       .then(res => res.data)
   },
+  profileData(userId: number){
+    return instance.get<ProfileDataType>(`profile/${userId}`)
+      .then(res => res.data)
+  }
+}
+
+type BaseResponseType<D = {}> = {
+  data: D
+  messages: []
+  fieldsErrors: []
+  resultCode: number
+}
+export type AuthMeDataType = {
+  id: number | null
+  login: string | null
+  email: string | null
+}
+
+export type ProfileDataType = {
+  "aboutMe": null | string
+  "contacts": {
+    "facebook": null | string
+    "website": null | string
+    "vk": null | string
+    "twitter": null | string
+    "instagram": null | string
+    "youtube": null | string
+    "github": null | string
+    "mainLink": null | string
+  },
+  "lookingForAJob": boolean
+  "lookingForAJobDescription": null | string
+  "fullName": string
+  "userId": number
+  "photos": {
+    "small": null | string
+    "large": null | string
+  }
 }

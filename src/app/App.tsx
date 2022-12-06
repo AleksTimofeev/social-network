@@ -6,7 +6,7 @@ import {useAppDispatch, useAppSelector} from "./store";
 import {authMe} from "../features/auth/authReducer";
 import {Pages} from "../pages/Pages";
 
-function App() {
+export const App = () => {
 
   const dispatch = useAppDispatch()
   const statusInitializingApp = useAppSelector(state => state.app.statusInitializingApp)
@@ -37,5 +37,3 @@ function App() {
     </div>
   );
 }
-
-export default App;
