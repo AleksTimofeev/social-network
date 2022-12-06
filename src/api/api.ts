@@ -22,8 +22,12 @@ export const api = {
     return instance.delete<{resultCode: number}>('auth/login')
       .then(res => res.data)
   },
-  profileData(userId: number){
+  getProfileData(userId: number){
     return instance.get<ProfileDataType>(`profile/${userId}`)
+      .then(res => res.data)
+  },
+  getUserStatus(userId: number){
+    return instance.get<string>(`profile/status/${userId}`)
       .then(res => res.data)
   }
 }
@@ -54,8 +58,8 @@ export type ProfileDataType = {
   },
   "lookingForAJob": boolean
   "lookingForAJobDescription": null | string
-  "fullName": string
-  "userId": number
+  "fullName": null | string
+  "userId": null | number
   "photos": {
     "small": null | string
     "large": null | string

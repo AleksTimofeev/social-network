@@ -1,6 +1,7 @@
 import {api, AuthMeDataType} from "../../api/api";
 import {changeStatusInitializingApp} from "../../app/appReducer";
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
+import {getProfileData} from "../profile/profileReducer";
 
 export type AuthReducerStateType = {
   authMeData: AuthMeDataType
@@ -22,6 +23,7 @@ export const authMe = createAsyncThunk('auth/authMe',async (arg, thunkAPI) => {
   try {
     const authData = await api.authMe()
     if (authData.resultCode === 0) {
+      if(authData.data.id)thunkAPI.dispatch(getProfileData({id: authData.data.id}))
       return authData.data
     } else {
       thunkAPI.rejectWithValue({message: authData.messages})
