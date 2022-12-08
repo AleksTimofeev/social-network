@@ -1,0 +1,35 @@
+.container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr;
+  gap: 5px 5%;
+  grid-auto-flow: row;
+  grid-template-areas:
+    "photo items";
+  margin-top: 50px;
+}
+
+.photo { grid-area: photo;
+  max-width: 300px;
+}
+.photo img {
+  width: 100%;
+}
+
+.items {  display: grid;
+  grid-template-columns: 1fr;
+  /*grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;*/
+  gap: 0px 0px;
+  grid-auto-flow: row;
+  /*grid-template-areas:*/
+  /*  "."*/
+  /*  "."*/
+  /*  "."*/
+  /*  "."*/
+  /*  "."*/
+  /*  "."*/
+  /*  "."*/
+  /*  ".";*/
+  grid-area: items;
+  align-items: center;
+}
