@@ -1,5 +1,5 @@
-import {createSlice, PayloadAction} from "@reduxjs/toolkit";
-import {UsersType} from "../../api/api";
+import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
+import {api, UsersType, UserType} from "../../api/api";
 
 type PaginationUsers = {
   page: number,
@@ -16,7 +16,15 @@ const initialState: UsersType & PaginationUsers = {
   count: 0
 }
 
-
+export const getUsers = createAsyncThunk('users/getUssers',
+  async (arg: {count?: number, page?: number}, thunkAPI) => {
+  try {
+    const data = await api.getUsers(arg.count, arg.page)
+    return data
+  }catch (error){
+    return thunkAPI.rejectWithValue(error)
+  }
+})
 
 const slice = createSlice({
   name: 'users',
@@ -27,7 +35,9 @@ const slice = createSlice({
     }
   },
   extraReducers: (builder) => {
-
+    builder.addCase(getUsers.fulfilled, (state, action) => {
+      state.items = action.payload.items
+    })
   }
 })
 
