@@ -29,6 +29,10 @@ export const api = {
   getUserStatus(userId: number){
     return instance.get<string>(`profile/status/${userId}`)
       .then(res => res.data)
+  },
+  getUsers(count: number = 10, page: number = 1){
+    return instance.get<UsersType>(`users?count=${count}&page=${page}`)
+      .then(res => res.data)
   }
 }
 
@@ -43,7 +47,6 @@ export type AuthMeDataType = {
   login: string | null
   email: string | null
 }
-
 export type ProfileDataType = {
   "aboutMe": null | string
   "contacts": {
@@ -64,4 +67,20 @@ export type ProfileDataType = {
     "small": null | string
     "large": null | string
   }
+}
+export type UserType = {
+  name: string
+  id: number
+  uniqueUrlName: null | string
+  photos: {
+    small: null | string
+    large: null | string
+  },
+  status: null | string
+  followed: boolean
+}
+export type UsersType = {
+  items: Array<UserType>
+  totalCount: number
+  error: null | string
 }
