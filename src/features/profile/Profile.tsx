@@ -21,7 +21,7 @@ export const Profile = () => {
             <span>{item[0]} - {item[1] ? item[1] : 'not information'}</span>
           ))}
         </div>
-        <span>{status}</span>
+        <h2>{status}</h2>
       </div>
     </Grid>
   );
