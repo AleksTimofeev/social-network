@@ -54,6 +54,11 @@ const Navigation = () => {
             Profile
           </NavLink>
         </MenuItem>
+        <MenuItem onClick={handleClose}>
+          <NavLink className={({isActive}) => style(isActive)} to={'/users'}>
+            Users
+          </NavLink>
+        </MenuItem>
       </Menu>
     </div>
   );
