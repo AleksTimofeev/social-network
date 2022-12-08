@@ -3,6 +3,7 @@ import {TypedUseSelectorHook, useDispatch, useSelector} from "react-redux";
 import {authReducer} from "../features/auth/authReducer";
 import {appReducer} from "./appReducer";
 import {profileReducer} from "../features/profile/profileReducer";
+import {usersReducer} from "../features/users/usersReducer";
 
 
 export const store = configureStore({
@@ -10,6 +11,7 @@ export const store = configureStore({
     app: appReducer,
     auth: authReducer,
     profile: profileReducer,
+    users: usersReducer
   }
 })
 
