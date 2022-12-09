@@ -1,6 +1,5 @@
 import React from 'react';
 import styles from './Header.module.css'
-import Navigation from "../navigation/Navigation";
 import {useNavigate} from "react-router-dom";
 import {useAppDispatch, useAppSelector} from "../../app/store";
 import {logout} from "../../features/auth/authReducer";
@@ -18,10 +17,7 @@ const Header = () => {
   }
 
   return (
-    <div className={styles.headerWrapper}>
-      <div>
-        <div>
-          <Navigation/>
+    <div className={styles.header}>
           <h4>
             {login}
           </h4>
@@ -33,8 +29,6 @@ const Header = () => {
                     onClick={handleLogin}
             >Login</button>
           }
-        </div>
-      </div>
     </div>
   );
 };

@@ -4,6 +4,7 @@ import styles from './App.module.css'
 import {useAppDispatch, useAppSelector} from "./store";
 import {authMe} from "../features/auth/authReducer";
 import {Pages} from "../pages/Pages";
+import Navigation from "../components/navigation/Navigation";
 
 export const App = () => {
 
@@ -16,24 +17,16 @@ export const App = () => {
 
 
   return (
-    <div className="App">
-
+    <div className={styles.container}>
+      <Header />
       {statusInitializingApp === 'loading' ?
         <div className={styles.loadingWrapper}>
           <h2>LOADING</h2>
-        </div> :
-        <div>
-          <div>
-            <Header/>
-          </div>
-          <div>
-            <div>
-              <Pages/>
-            </div>
-          </div>
-        </div>}
-
-
+        </div> : <>
+          <Navigation />
+          <Pages/>
+        </>
+      }
     </div>
   );
 }

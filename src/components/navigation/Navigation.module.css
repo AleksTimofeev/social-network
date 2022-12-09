@@ -5,3 +5,6 @@
 .activeLink {
   color: green;
 }
+.navigation {
+  grid-area: navigation;
+}
