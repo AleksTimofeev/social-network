@@ -1,6 +1,5 @@
 import React from 'react';
 import styles from './Header.module.css'
-import {AppBar, Button, Toolbar, Typography} from "@mui/material";
 import Navigation from "../navigation/Navigation";
 import {useNavigate} from "react-router-dom";
 import {useAppDispatch, useAppSelector} from "../../app/store";
@@ -20,22 +19,22 @@ const Header = () => {
 
   return (
     <div className={styles.headerWrapper}>
-      <AppBar position="static">
-        <Toolbar>
+      <div>
+        <div>
           <Navigation/>
-          <Typography variant="h6" component="div" sx={{flexGrow: 1}}>
+          <h4>
             {login}
-          </Typography>
+          </h4>
           {login ?
-            <Button color="inherit"
+            <button
                     onClick={handleLogout}
-            >Logout</Button> :
-            <Button color="inherit"
+            >Logout</button> :
+            <button
                     onClick={handleLogin}
-            >Login</Button>
+            >Login</button>
           }
-        </Toolbar>
-      </AppBar>
+        </div>
+      </div>
     </div>
   );
 };

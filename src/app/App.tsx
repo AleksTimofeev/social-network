@@ -1,5 +1,4 @@
 import React, {useEffect} from 'react';
-import {CircularProgress, Container, Grid} from "@mui/material";
 import Header from "../components/header/Header";
 import styles from './App.module.css'
 import {useAppDispatch, useAppSelector} from "./store";
@@ -13,8 +12,7 @@ export const App = () => {
 
   useEffect(() => {
     dispatch(authMe())
-  },[])
-
+  }, [])
 
 
   return (
@@ -22,18 +20,18 @@ export const App = () => {
 
       {statusInitializingApp === 'loading' ?
         <div className={styles.loadingWrapper}>
-          <CircularProgress size={'20%'} />
+          <h2>LOADING</h2>
         </div> :
-        <Grid container spacing={2}>
-        <Grid item xs={12}>
-          <Header/>
-        </Grid>
-        <Grid item xs={12}>
-          <Container>
-            <Pages />
-          </Container>
-        </Grid>
-      </Grid>}
+        <div>
+          <div>
+            <Header/>
+          </div>
+          <div>
+            <div>
+              <Pages/>
+            </div>
+          </div>
+        </div>}
 
 
     </div>

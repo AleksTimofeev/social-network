@@ -1,5 +1,4 @@
 import React from 'react';
-import {Grid} from "@mui/material";
 import styles from './Profile.module.css'
 import avatar from '../../assets/image/artworks-SFJCSqkDi8QduppR-9TFs6Q-t500x500.jpg'
 import {useAppSelector} from "../../app/store";
@@ -11,7 +10,7 @@ export const Profile = () => {
   const contacts = useAppSelector(state => state.profile.profileData.contacts)
 
   return (
-    <Grid container spacing={2}>
+    <div>
       <div className={styles.container}>
         <div className={styles.photo}>
           <img src={photo ? photo : avatar} alt={'avatar'} />
@@ -23,6 +22,6 @@ export const Profile = () => {
         </div>
         <h2>{status}</h2>
       </div>
-    </Grid>
+    </div>
   );
 }

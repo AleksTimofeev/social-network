@@ -1,5 +1,4 @@
 import React, {useEffect, useState} from 'react';
-import {Grid} from "@mui/material";
 import {useAppDispatch, useAppSelector} from "../../app/store";
 import {getUsers} from "./usersReducer";
 
@@ -17,9 +16,9 @@ export const Users = () => {
   },[page, countUsers])
 
   return (
-    <Grid container spacing={2}>
+    <div>
 
-    </Grid>
+    </div>
   );
 };
 
