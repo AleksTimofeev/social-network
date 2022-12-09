@@ -1,8 +1,15 @@
-.headerWrapper {
-  width: 100%;
-  display: flex;
-}
 .header {
   grid-area: header;
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+  padding: 0 1%;
   background: aquamarine;
+}
+.avatar {}
+.userName {
+  margin-left: 20px;
+}
+.buttons {
+  margin-left: auto;
 }
