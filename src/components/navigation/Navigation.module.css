@@ -7,4 +7,5 @@
 }
 .navigation {
   grid-area: navigation;
+  background: cornflowerblue;
 }

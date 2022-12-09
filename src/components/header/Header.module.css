@@ -2,4 +2,7 @@
   width: 100%;
   display: flex;
 }
-.header { grid-area: header; }
+.header {
+  grid-area: header;
+  background: aquamarine;
+}
