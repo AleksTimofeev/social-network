@@ -24,6 +24,7 @@ export const authMe = createAsyncThunk('auth/authMe',async (arg, thunkAPI) => {
     const authData = await api.authMe()
     if (authData.resultCode === 0) {
       if(authData.data.id)thunkAPI.dispatch(getProfileData({id: authData.data.id}))
+      thunkAPI.dispatch(changeStatusInitializingApp('succeeded'))
       return authData.data
     } else {
       thunkAPI.rejectWithValue({message: authData.messages})
@@ -32,7 +33,7 @@ export const authMe = createAsyncThunk('auth/authMe',async (arg, thunkAPI) => {
     thunkAPI.rejectWithValue({message: 'error'})
     alert(error)
   } finally {
-    thunkAPI.dispatch(changeStatusInitializingApp('succeeded'))
+    // thunkAPI.dispatch(changeStatusInitializingApp('succeeded'))
   }
 })
 

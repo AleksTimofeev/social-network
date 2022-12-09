@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import {Grid} from "@mui/material";
 import styles from './Profile.module.css'
 import avatar from '../../assets/image/artworks-SFJCSqkDi8QduppR-9TFs6Q-t500x500.jpg'
@@ -17,8 +17,8 @@ export const Profile = () => {
           <img src={photo ? photo : avatar} alt={'avatar'} />
         </div>
         <div className={styles.items}>
-          {Object.entries(contacts).map(item => (
-            <span>{item[0]} - {item[1] ? item[1] : 'not information'}</span>
+          {Object.entries(contacts).map((item, i) => (
+            <span key={i}>{item[0]} - {item[1] ? item[1] : 'not information'}</span>
           ))}
         </div>
         <h2>{status}</h2>

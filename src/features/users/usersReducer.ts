@@ -1,25 +1,16 @@
-import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
-import {api, UsersType, UserType} from "../../api/api";
+import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
+import {api, UsersType} from "../../api/api";
 
-type PaginationUsers = {
-  page: number,
-  countPages: number,
-  count: number
-}
-
-const initialState: UsersType & PaginationUsers = {
+const initialState: UsersType = {
   items: [],
   totalCount: 0,
-  error: null,
-  page: 1,
-  countPages: 0,
-  count: 0
+  error: null
 }
 
 export const getUsers = createAsyncThunk('users/getUssers',
-  async (arg: {count?: number, page?: number}, thunkAPI) => {
+  async (arg: {countUsers: number, page: number}, thunkAPI) => {
   try {
-    const data = await api.getUsers(arg.count, arg.page)
+    const data = await api.getUsers(arg.countUsers, arg.page)
     return data
   }catch (error){
     return thunkAPI.rejectWithValue(error)
@@ -29,16 +20,14 @@ export const getUsers = createAsyncThunk('users/getUssers',
 const slice = createSlice({
   name: 'users',
   initialState: initialState,
-  reducers: {
-    changePageNumber: (state, action: PayloadAction<{ pageNumber: number }>) => {
-      state.page = action.payload.pageNumber
-    }
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder.addCase(getUsers.fulfilled, (state, action) => {
       state.items = action.payload.items
+      state.totalCount = action.payload.totalCount
     })
   }
 })
 
+export const {} = slice.actions
 export const usersReducer = slice.reducer

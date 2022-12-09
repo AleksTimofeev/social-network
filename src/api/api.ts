@@ -30,7 +30,7 @@ export const api = {
     return instance.get<string>(`profile/status/${userId}`)
       .then(res => res.data)
   },
-  getUsers(count: number = 10, page: number = 1){
+  getUsers(count: number, page: number){
     return instance.get<UsersType>(`users?count=${count}&page=${page}`)
       .then(res => res.data)
   }
