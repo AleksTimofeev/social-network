@@ -34,7 +34,7 @@ const Header = () => {
 
   return (
     <div className={styles.header}>
-      <Avatar size={64}
+      <Avatar size={48}
               icon={
                 avatarImg()
               }
@@ -43,11 +43,11 @@ const Header = () => {
         {login}
       </h4>
       {login ?
-        <Button type="primary"
+        <Button type="default"
           className={styles.buttons}
           onClick={handleLogout}
         >Logout</Button> :
-        <Button type="primary"
+        <Button type="default"
           className={styles.buttons}
 
           onClick={handleLogin}
