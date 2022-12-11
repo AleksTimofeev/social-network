@@ -3,7 +3,7 @@ import {useAppDispatch, useAppSelector} from "../../app/store";
 import {getUsers} from "./usersReducer";
 import styles from './Users.module.css'
 import {Pagination} from "antd";
-import {User} from "./user/User";
+import User from "./user/User";
 
 export const Users = () => {
 
@@ -11,8 +11,8 @@ export const Users = () => {
   const [page, setPage] = useState(1)
   const [countUsers, setCountUsers] = useState(10)
   const dataUsers = useAppSelector(state => state.users)
+  const followStatus = useAppSelector(state => state.users.followStatus)
   const pageCount = Math.ceil(dataUsers.totalCount / countUsers)
-  console.log('page count - ' + pageCount)
 
   const handleChangeCurrentPage = (page: number, pageSize: number) => {
     setPage(page)
@@ -29,7 +29,11 @@ export const Users = () => {
   return (
     <div className={styles.wrapper}>
       {dataUsers.items.map(user => (
-        <User dataUser={user} />
+        <User
+          key={user.id}
+          dataUser={user}
+          followStatus={followStatus.find(id => id === user.id)}
+        />
       ))}
       <Pagination
         current={page}

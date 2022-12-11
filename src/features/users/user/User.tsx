@@ -2,27 +2,28 @@ import React from 'react';
 import {UserType} from "../../../api/api";
 import styles from './User.module.css'
 import {UserOutlined} from "@ant-design/icons";
-import {Avatar} from "antd";
+import {Avatar, Button} from "antd";
 import {useAppDispatch, useAppSelector} from "../../../app/store";
 import {follow, unfollow} from "../usersReducer";
 
 type PropsType = {
   dataUser: UserType
+  followStatus: number | undefined
 }
 
-export const User: React.FC<PropsType> = (
+const User: React.FC<PropsType> = (
   {dataUser: {
     name,
     id,
     status,
     uniqueUrlName,
     photos,
-    followed}
+    followed}, followStatus
   }
   ) => {
 
   const dispatch = useAppDispatch()
-  const followStatus = useAppSelector(state => state.users.followStatus).find(i => i === id)
+  // const followStatus = useAppSelector(state => state.users.followStatus).find(i => i === id)
 
   const handleFollow = () => {
     dispatch(follow({userId: id}))
@@ -30,7 +31,7 @@ export const User: React.FC<PropsType> = (
   const handleUnfollow = () => {
     dispatch(unfollow({userId: id}))
   }
-
+console.log('user')
   const avatarImg = () => {
     if(photos.small){
       return <img src={photos.small} alt={'avatar'} height={'64px'} />
@@ -50,13 +51,15 @@ export const User: React.FC<PropsType> = (
       </div>
       <div className={styles.followButtons}>
         {followed ?
-          <button disabled={!!followStatus} onClick={handleUnfollow}>
+          <Button type={'default'} size={'small'} disabled={!!followStatus} onClick={handleUnfollow}>
             unfollow
-          </button> :
-          <button disabled={!!followStatus} onClick={handleFollow}>
+          </Button> :
+          <Button type={'default'} size={'small'} disabled={!!followStatus} onClick={handleFollow}>
             follow
-          </button>}
+          </Button>}
       </div>
     </div>
   );
 };
+
+export default React.memo(User)
