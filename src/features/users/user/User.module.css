@@ -1,0 +1,13 @@
+.wrapper {
+  min-width: 400px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 10px;
+}
+.col {
+  height: 64px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}

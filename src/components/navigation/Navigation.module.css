@@ -6,6 +6,7 @@
   color: green;
 }
 .navigation {
+  height: 90vh;
   grid-area: navigation;
   background: #e7e7e7;
 }

@@ -3,7 +3,7 @@ import {useAppDispatch, useAppSelector} from "../../app/store";
 import {getUsers} from "./usersReducer";
 import styles from './Users.module.css'
 import {Pagination} from "antd";
-import {log} from "util";
+import {User} from "./user/User";
 
 export const Users = () => {
 
@@ -28,6 +28,9 @@ export const Users = () => {
 
   return (
     <div className={styles.wrapper}>
+      {dataUsers.items.map(user => (
+        <User dataUser={user} />
+      ))}
       <Pagination
         current={page}
         total={dataUsers.totalCount}

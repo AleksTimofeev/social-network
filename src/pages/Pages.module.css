@@ -1,4 +1,6 @@
 .page {
+  height: 90vh;
   grid-area: page;
   background: cadetblue;
+  overflow-y: scroll;
 }
