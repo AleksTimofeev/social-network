@@ -3,6 +3,8 @@ import {UserType} from "../../../api/api";
 import styles from './User.module.css'
 import {UserOutlined} from "@ant-design/icons";
 import {Avatar} from "antd";
+import {useAppDispatch, useAppSelector} from "../../../app/store";
+import {follow, unfollow} from "../usersReducer";
 
 type PropsType = {
   dataUser: UserType
@@ -18,6 +20,16 @@ export const User: React.FC<PropsType> = (
     followed}
   }
   ) => {
+
+  const dispatch = useAppDispatch()
+  const followStatus = useAppSelector(state => state.users.followStatus).find(i => i === id)
+
+  const handleFollow = () => {
+    dispatch(follow({userId: id}))
+  }
+  const handleUnfollow = () => {
+    dispatch(unfollow({userId: id}))
+  }
 
   const avatarImg = () => {
     if(photos.small){
@@ -36,7 +48,15 @@ export const User: React.FC<PropsType> = (
         <span>{name}</span>
         <span>{status}</span>
       </div>
-
+      <div className={styles.followButtons}>
+        {followed ?
+          <button disabled={!!followStatus} onClick={handleUnfollow}>
+            unfollow
+          </button> :
+          <button disabled={!!followStatus} onClick={handleFollow}>
+            follow
+          </button>}
+      </div>
     </div>
   );
 };

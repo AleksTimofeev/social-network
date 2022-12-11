@@ -50,8 +50,8 @@ export const api = {
 
 type BaseResponseType<D = {}> = {
   data: D
-  messages: []
-  fieldsErrors: []
+  messages: Array<string>
+  fieldsErrors: Array<string>
   resultCode: number
 }
 export type AuthMeDataType = {
