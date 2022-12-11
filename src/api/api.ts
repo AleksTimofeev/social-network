@@ -33,6 +33,18 @@ export const api = {
   getUsers(count: number, page: number){
     return instance.get<UsersType>(`users?count=${count}&page=${page}`)
       .then(res => res.data)
+  },
+  isFollower(userId: string){
+    return instance.get(`follow/${userId}`)
+      .then(res => res.data)
+  },
+  follow(userId: number){
+    return instance.post<BaseResponseType>(`follow/${userId}`)
+      .then(res => res.data)
+  },
+  unfollow(userId: number){
+    return instance.delete<BaseResponseType>(`follow/${userId}`)
+      .then(res => res.data)
   }
 }
 
