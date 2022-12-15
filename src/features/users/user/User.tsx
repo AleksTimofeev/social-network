@@ -23,7 +23,6 @@ const User: React.FC<PropsType> = (
   ) => {
 
   const dispatch = useAppDispatch()
-  // const followStatus = useAppSelector(state => state.users.followStatus).find(i => i === id)
 
   const handleFollow = () => {
     dispatch(follow({userId: id}))
@@ -31,7 +30,6 @@ const User: React.FC<PropsType> = (
   const handleUnfollow = () => {
     dispatch(unfollow({userId: id}))
   }
-console.log('user')
   const avatarImg = () => {
     if(photos.small){
       return <img src={photos.small} alt={'avatar'} height={'64px'} />
