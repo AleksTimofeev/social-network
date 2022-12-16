@@ -5,13 +5,12 @@ import {useParams} from "react-router-dom";
 
 export const CurrentUser = () => {
 
-  const params = useParams()
-  console.log(params)
+  const params = useParams<{id: string}>()
 
   const dispatch = useAppDispatch()
 
   useEffect(() => {
-    // dispatch(getCurrentUserProfileData())
+    dispatch(getCurrentUserProfileData({id: Number(params.id)}))
   },[])
 
   return (

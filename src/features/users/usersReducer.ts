@@ -76,7 +76,7 @@ export const unfollow = createAsyncThunk('users/unfollow', async(arg: {userId: n
 })
 
 export const getCurrentUserProfileData = createAsyncThunk(
-  'profile/getProfileData',
+  'users/getCurrentProfileData',
   async (arg: { id: number }, thunkAPI) => {
     try {
       const profileData = await api.getProfileData(arg.id)
