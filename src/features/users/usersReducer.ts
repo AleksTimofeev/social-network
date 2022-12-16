@@ -1,12 +1,36 @@
 import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
-import {api, UsersType} from "../../api/api";
+import {api, ProfileDataType, UsersType} from "../../api/api";
 import {RequestStatusType} from "../../app/appReducer";
 
-const initialState: UsersType & {followStatus: Array<number>} = {
+const initialState: UsersType &
+  {followStatus: Array<number>} &
+  {currentUserProfile: ProfileDataType, currentUserStatus: string | null} = {
   items: [],
   totalCount: 0,
   error: null,
-  followStatus: []
+  followStatus: [],
+  currentUserStatus: null,
+  currentUserProfile: {
+    aboutMe: null,
+    contacts: {
+      facebook: null,
+      website: null,
+      vk: null,
+      twitter: null,
+      instagram: null,
+      youtube: null,
+      github: null,
+      mainLink: null
+    },
+    lookingForAJob: false,
+    lookingForAJobDescription: null,
+    fullName: null,
+    userId: null,
+    photos: {
+      small: null,
+      large: null
+    }
+  },
 }
 
 export const getUsers = createAsyncThunk('users/getUssers',
@@ -51,6 +75,24 @@ export const unfollow = createAsyncThunk('users/unfollow', async(arg: {userId: n
   }
 })
 
+export const getCurrentUserProfileData = createAsyncThunk(
+  'profile/getProfileData',
+  async (arg: { id: number }, thunkAPI) => {
+    try {
+      const profileData = await api.getProfileData(arg.id)
+      const userStatus = await api.getUserStatus(arg.id)
+      return {profileData, userStatus}
+    }
+    catch (e) {
+      alert(e)
+    }
+    finally {
+
+    }
+  })
+
+
+
 const slice = createSlice({
   name: 'users',
   initialState: initialState,
@@ -74,6 +116,12 @@ const slice = createSlice({
     })
     builder.addCase(unfollow.fulfilled, (state, action) => {
       state.items.find(user => user.id === action.payload ? user.followed = false : undefined)
+    })
+    builder.addCase(getCurrentUserProfileData.fulfilled, (state, action) => {
+      if(action.payload){
+        state.currentUserProfile = action.payload.profileData
+        state.currentUserStatus = action.payload.userStatus
+      }
     })
   }
 })
