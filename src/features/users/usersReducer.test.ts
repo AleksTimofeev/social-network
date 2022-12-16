@@ -1,8 +1,10 @@
-import {UsersType} from "../../api/api";
+import {ProfileDataType, UsersType} from "../../api/api";
 import {follow, getUsers, unfollow, usersReducer} from "./usersReducer";
 
 
-let data: UsersType & {followStatus: Array<number>}
+let data: UsersType &
+  {followStatus: Array<number>} &
+  {currentUserProfile: ProfileDataType, currentUserStatus: string | null}
 
 beforeEach(() => {
   data = {
@@ -43,7 +45,29 @@ beforeEach(() => {
     ],
     totalCount: 155,
     followStatus: [],
-    error: null
+    error: null,
+    currentUserStatus: null,
+    currentUserProfile: {
+      aboutMe: null,
+      contacts: {
+        facebook: null,
+        website: null,
+        vk: null,
+        twitter: null,
+        instagram: null,
+        youtube: null,
+        github: null,
+        mainLink: null
+      },
+      lookingForAJob: false,
+      lookingForAJobDescription: null,
+      fullName: null,
+      userId: null,
+      photos: {
+        small: null,
+        large: null
+      }
+    },
   }
 })
 
@@ -52,7 +76,29 @@ test('get users', () => {
     items: [],
     totalCount: 0,
     error: null,
-    followStatus: []
+    followStatus: [],
+    currentUserStatus: null,
+    currentUserProfile: {
+      aboutMe: null,
+      contacts: {
+        facebook: null,
+        website: null,
+        vk: null,
+        twitter: null,
+        instagram: null,
+        youtube: null,
+        github: null,
+        mainLink: null
+      },
+      lookingForAJob: false,
+      lookingForAJobDescription: null,
+      fullName: null,
+      userId: null,
+      photos: {
+        small: null,
+        large: null
+      }
+    },
   }
   const action = getUsers.fulfilled(
     {items: data.items, error: null, totalCount: data.totalCount}, '', {countUsers: 10, page: 1})
