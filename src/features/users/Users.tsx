@@ -28,6 +28,13 @@ export const Users = () => {
 
   return (
     <div className={styles.wrapper}>
+      <Pagination
+      className={styles.pagination}
+      current={page}
+      total={dataUsers.totalCount}
+      onChange={handleChangeCurrentPage}
+      onShowSizeChange={handleChangeSizePage}
+    />
       {dataUsers.items.map(user => (
         <User
           key={user.id}
@@ -35,12 +42,6 @@ export const Users = () => {
           followStatus={followStatus.find(id => id === user.id)}
         />
       ))}
-      <Pagination
-        current={page}
-        total={dataUsers.totalCount}
-        onChange={handleChangeCurrentPage}
-        onShowSizeChange={handleChangeSizePage}
-      />
     </div>
   );
 };
