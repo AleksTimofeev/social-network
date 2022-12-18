@@ -4,7 +4,8 @@ import {RequestStatusType} from "../../app/appReducer";
 
 const initialState: UsersType &
   {followStatus: Array<number>} &
-  {currentUserProfile: ProfileDataType, currentUserStatus: string | null} = {
+  {currentUserProfile: ProfileDataType, currentUserStatus: string | null} &
+  {statusGetUsers: RequestStatusType, statusGetCurrentUserProfileData: RequestStatusType} = {
   items: [],
   totalCount: 0,
   error: null,
@@ -31,15 +32,22 @@ const initialState: UsersType &
       large: null
     }
   },
+  statusGetUsers: 'idle',
+  statusGetCurrentUserProfileData: 'idle'
+
 }
 
-export const getUsers = createAsyncThunk('users/getUssers',
+export const getUsers = createAsyncThunk('users/getUsers',
   async (arg: {countUsers: number, page: number}, thunkAPI) => {
+  thunkAPI.dispatch(changeStatusGetUsers('loading'))
   try {
     const users = await api.getUsers(arg.countUsers, arg.page)
     return users
   }catch (error){
     return thunkAPI.rejectWithValue(error)
+  }finally {
+    thunkAPI.dispatch(changeStatusGetUsers('idle'))
+
   }
 })
 
@@ -78,6 +86,7 @@ export const unfollow = createAsyncThunk('users/unfollow', async(arg: {userId: n
 export const getCurrentUserProfileData = createAsyncThunk(
   'users/getCurrentProfileData',
   async (arg: { id: number }, thunkAPI) => {
+    thunkAPI.dispatch(changeStatusGetCurrentUser('loading'))
     try {
       const profileData = await api.getProfileData(arg.id)
       const userStatus = await api.getUserStatus(arg.id)
@@ -87,7 +96,7 @@ export const getCurrentUserProfileData = createAsyncThunk(
       alert(e)
     }
     finally {
-
+      thunkAPI.dispatch(changeStatusGetCurrentUser('idle'))
     }
   })
 
@@ -104,7 +113,13 @@ const slice = createSlice({
       }else{
        state.followStatus.push(action.payload)
       }
-    }
+    },
+    changeStatusGetCurrentUser: (state, action: PayloadAction<RequestStatusType>) => {
+      state.statusGetCurrentUserProfileData = action.payload
+    },
+    changeStatusGetUsers: (state, action: PayloadAction<RequestStatusType>) => {
+      state.statusGetUsers = action.payload
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(getUsers.fulfilled, (state, action) => {
@@ -121,10 +136,11 @@ const slice = createSlice({
       if(action.payload){
         state.currentUserProfile = action.payload.profileData
         state.currentUserStatus = action.payload.userStatus
+        state.statusGetCurrentUserProfileData = 'idle'
       }
     })
   }
 })
 
-export const {changeFollowStatus} = slice.actions
+export const {changeFollowStatus, changeStatusGetCurrentUser, changeStatusGetUsers} = slice.actions
 export const usersReducer = slice.reducer

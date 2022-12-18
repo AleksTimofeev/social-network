@@ -12,6 +12,7 @@ export const Users = () => {
   const [countUsers, setCountUsers] = useState(10)
   const dataUsers = useAppSelector(state => state.users)
   const followStatus = useAppSelector(state => state.users.followStatus)
+  const statusGetUsers = useAppSelector(state => state.users.statusGetUsers)
   const pageCount = Math.ceil(dataUsers.totalCount / countUsers)
 
   const handleChangeCurrentPage = (page: number, pageSize: number) => {
@@ -35,7 +36,7 @@ export const Users = () => {
       onChange={handleChangeCurrentPage}
       onShowSizeChange={handleChangeSizePage}
     />
-      {dataUsers.items.map(user => (
+      {statusGetUsers === 'loading' ? <h2>LOADING</h2> : dataUsers.items.map(user => (
         <User
           key={user.id}
           dataUser={user}

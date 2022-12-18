@@ -1,10 +1,9 @@
 import {ProfileDataType, UsersType} from "../../api/api";
 import {follow, getUsers, unfollow, usersReducer} from "./usersReducer";
+import {RequestStatusType} from "../../app/appReducer";
 
 
-let data: UsersType &
-  {followStatus: Array<number>} &
-  {currentUserProfile: ProfileDataType, currentUserStatus: string | null}
+let data: ReturnType<typeof usersReducer>
 
 beforeEach(() => {
   data = {
@@ -68,6 +67,8 @@ beforeEach(() => {
         large: null
       }
     },
+    statusGetUsers: 'idle',
+    statusGetCurrentUserProfileData: 'idle'
   }
 })
 
@@ -99,6 +100,8 @@ test('get users', () => {
         large: null
       }
     },
+    statusGetUsers: 'idle' as RequestStatusType,
+    statusGetCurrentUserProfileData: 'idle' as RequestStatusType
   }
   const action = getUsers.fulfilled(
     {items: data.items, error: null, totalCount: data.totalCount}, '', {countUsers: 10, page: 1})

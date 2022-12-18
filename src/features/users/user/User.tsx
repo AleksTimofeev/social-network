@@ -5,6 +5,7 @@ import {UserOutlined} from "@ant-design/icons";
 import {Avatar, Button} from "antd";
 import {useAppDispatch, useAppSelector} from "../../../app/store";
 import {follow, unfollow} from "../usersReducer";
+import {useNavigate} from "react-router-dom";
 
 type PropsType = {
   dataUser: UserType
@@ -23,12 +24,16 @@ const User: React.FC<PropsType> = (
   ) => {
 
   const dispatch = useAppDispatch()
+  const navigate = useNavigate()
 
   const handleFollow = () => {
     dispatch(follow({userId: id}))
   }
   const handleUnfollow = () => {
     dispatch(unfollow({userId: id}))
+  }
+  const handleGoToProfile = () => {
+    navigate(`/users/${id}`)
   }
   const avatarImg = () => {
     if(photos.small){
@@ -56,6 +61,7 @@ const User: React.FC<PropsType> = (
             follow
           </Button>}
       </div>
+      <Button onClick={handleGoToProfile} size={"small"}>go to profile</Button>
     </div>
   );
 };
