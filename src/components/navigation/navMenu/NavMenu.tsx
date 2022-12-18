@@ -4,6 +4,8 @@ import { SettingOutlined } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
 import { Menu } from 'antd';
 import {useLocation, useNavigate} from "react-router-dom";
+import iconUsers from '../../../assets/icons/icon-users.png'
+import iconUser from '../../../assets/icons/icon-user.png'
 
 type MenuItem = Required<MenuProps>['items'][number];
 
@@ -26,9 +28,9 @@ const getItem = (
 const items: MenuProps['items'] = [
   getItem('Home', '/'),
 
-  getItem('Profile', '/profile'),
+  getItem('Profile', '/profile', <img src={iconUser} alt={'icon'} width={'24px'}/>),
 
-  getItem('Users', '/users', <SettingOutlined />),
+  getItem('Users', '/users', <img src={iconUsers} alt={'icon'} width={'30px'}/>),
 
 ];
 
